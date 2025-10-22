@@ -1,0 +1,981 @@
+/* --- ESTILOS GERAIS E RESET --- */
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+    background-color: #f4f4f9; 
+    color: #333; 
+    margin: 0; 
+}
+
+/* --- CABEÇALHO E NAVEGAÇÃO --- */
+header { 
+    background-color: #2c3e50; 
+    color: white; 
+    padding: 0 1.5rem; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 65px;
+}
+
+header h1 { margin: 0; font-size: 1.2em; }
+header h1 a { color: white; text-decoration: none; display: flex; align-items: center; }
+.header-logo { height: 35px; width: auto; margin-right: 12px; }
+
+.main-nav { display: flex; align-items: center; gap: 10px; }
+.main-nav a { color: white; text-decoration: none; padding: 10px 15px; border-radius: 5px; transition: background-color 0.2s ease-in-out; }
+.main-nav a.active { background-color: rgba(255, 255, 255, 0.2); font-weight: 600; }
+
+.main-nav > a:hover,
+.nav-dropdown:hover > .dropdown-toggle {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- ESTILOS PARA MENUS SUSPENSOS (DROPDOWNS) --- */
+.nav-dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* Posiciona logo abaixo do link pai */
+    right: 0; /* Alinha à direita */
+    background-color: #34495e;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 1001;
+    border-radius: 0 0 5px 5px;
+    padding: 5px 0;
+}
+
+.dropdown-menu a {
+    padding: 10px 20px;
+    display: block;
+    white-space: nowrap; /* Impede que o texto quebre linha */
+}
+
+/* Mostra o menu ao passar o mouse */
+.nav-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Estilos específicos para o dropdown de usuário */
+.user-dropdown {
+    margin-left: auto; /* Joga o menu do usuário para a direita */
+}
+
+.user-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-toggle strong {
+    font-weight: 600;
+}
+
+/* Estilo para o ícone de seta nos dropdowns */
+.dropdown-toggle .fa-chevron-down {
+    font-size: 0.7em;
+    margin-left: 5px;
+    opacity: 0.7;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Gira a seta quando o menu está aberto (opcional, mas elegante) */
+.nav-dropdown:hover .dropdown-toggle .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* Ajuste para o mobile */
+@media (max-width: 768px) {
+    .nav-dropdown.is-open .dropdown-toggle .fa-chevron-down {
+        transform: rotate(180deg);
+    }
+}
+
+/* Regra para o botão sair dentro do dropdown */
+.dropdown-menu a[href="logout.php"] {
+    background-color: #3498db;
+    font-weight: 500;
+    margin: 5px;
+    width: auto;
+    border-radius: 4px;
+}
+.dropdown-menu a[href="logout.php"]:hover {
+    background-color: #2980b9;
+}
+
+/* Botão Hambúrguer - escondido por padrão */
+.menu-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+/* --- CONTEÚDO PRINCIPAL --- */
+main { max-width: 1200px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+
+
+/* --- TABELAS --- */
+.table-container { overflow-x: auto; } /* Permite rolagem horizontal */
+table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; min-width: 800px; /* Garante que a tabela tenha uma largura mínima antes de rolar */ }
+th, td { padding: 12px; border: 1px solid #ddd; text-align: left; vertical-align: middle; }
+th { background-color: #f2f2f2; }
+tr:nth-child(even) { background-color: #f9f9f9; }
+.actions-cell { text-align: center; white-space: nowrap; }
+.actions-cell a { text-decoration: none; margin: 0 8px; font-size: 1.2em; }
+.actions-cell .fa-pen-to-square { color: #3498db; }
+.actions-cell .fa-trash-can { color: #c0392b; }
+.actions-cell .fa-circle-check { color: #27ae60; }
+.actions-cell .fa-circle-xmark { color: #f39c12; }
+.actions-cell .fa-users { color: #8e44ad; } /* Roxo */
+
+/* --- ESTILOS PARA O CABEÇALHO DA TABELA ORDENÁVEL --- */
+th a {
+    text-decoration: none;
+    color: inherit; /* Herda a cor do texto do th (preto/cinza escuro) */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaço entre o texto e o ícone */
+}
+
+th a:hover {
+    color: #3498db; /* Muda a cor do texto para azul ao passar o mouse */
+}
+
+th a .sort-icon {
+    font-size: 0.9em;
+    color: #bdc3c7; /* Cor cinza claro para ícones inativos */
+}
+
+th a .sort-icon.active {
+    color: #3498db; /* Cor azul para o ícone ativo */
+}
+
+/* --- CORES DE STATUS --- */
+.entrada { color: #27ae60; }
+.saida { color: #c0392b; }
+
+/* --- FORMULÁRIOS --- */
+form { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+form input, form select, form button { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; }
+form button { background-color: #3498db; color: white; border: none; cursor: pointer; }
+form button:hover { background-color: #2980b9; }
+
+.filter-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; padding: 20px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; margin-bottom: 2rem; align-items: end; }
+.filter-form .form-group { display: flex; flex-direction: column; }
+.filter-form label { margin-bottom: 5px; font-weight: bold; font-size: 0.9em; }
+.filter-form .form-actions { display: flex; gap: 10px; align-items: center; }
+.btn-clear { background-color: #6c757d; color: white; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-size: 1em; text-align: center; }
+.btn-clear:hover { background-color: #5a6268; text-decoration: none; }
+
+/* --- ESTILOS PARA O FORMULÁRIO DA CONTA --- */
+.account-form {
+    display: block; /* Volta ao comportamento padrão de formulário */
+    max-width: 600px;
+    margin: 0 auto; /* Centraliza o formulário na página */
+}
+
+.form-section {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 1.5rem; /* Espaço entre as seções */
+}
+
+.form-section h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #34495e;
+    font-size: 1.2em;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.account-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+/* Remove a margem do último grupo de campos em cada seção */
+.form-section .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.account-form label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.account-form input {
+    width: 100%;
+    box-sizing: border-box; /* Garante que padding não estoure a largura */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.password-confirmation {
+    background-color: #fbeee6;
+    border-color: #e57373;
+}
+
+.password-confirmation h3 {
+    color: #c0392b;
+}
+
+/* Alinha o botão ao final do formulário */
+.account-form button[type="submit"] {
+    display: block;
+    width: auto;
+    margin-left: auto; /* Joga o botão para a direita */
+    padding: 12px 25px;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+/* --- ESTILO PARA O CARD DE DESTAQUE "BALANÇO DO MÊS" --- */
+.dashboard-highlight {
+    text-align: center; /* Centraliza o conteúdo como texto */
+    margin-bottom: 2rem;
+}
+
+.dashboard-highlight .card {
+    display: inline-block; /* Faz o card se comportar como um bloco de texto, respeitando o text-align */
+    width: auto; /* A largura se ajusta ao conteúdo */
+    min-width: 280px;
+    padding: 15px 25px;
+    background-color: #f8f9fa;
+}
+
+.dashboard-highlight .card h4 {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.dashboard-highlight .card p {
+    font-size: 2.2em;
+}
+
+/* --- ESTILO PARA ÍCONES-BOTÃO DENTRO DA MODAL --- */
+.anexo-actions .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;   /* Largura fixa */
+    height: 22px;  /* Altura fixa (igual à largura para ser um quadrado) */
+    border-radius: 50%; /* Deixa o fundo circular */
+    text-decoration: none;
+    font-size: 1.1em; /* Tamanho do ícone interno */
+    color: white !important;
+    transition: background-color 0.2s;
+    border: none;
+}
+
+/* Cor para o ícone de Baixar */
+.anexo-actions .download-icon {
+    background-color: #27ae60; /* Verde */
+}
+.anexo-actions .download-icon:hover {
+    background-color: #229954;
+}
+
+/* Cor para o ícone de Ver/Imprimir */
+.anexo-actions .view-icon {
+    background-color: #3498db; /* Azul */
+}
+.anexo-actions .view-icon:hover {
+    background-color: #2980b9;
+}
+
+/* Cor para o ícone de Excluir */
+.anexo-actions .delete-icon {
+    background-color: #c0322b; /* Vermelho (um pouco mais escuro) */
+}
+.anexo-actions .delete-icon:hover {
+    background-color: #a93226;
+}
+
+/*
+==============================================
+ESTILOS PARA MODAIS
+==============================================
+*/
+
+/* Fundo escuro */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+
+/* Conteúdo da Modal */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Botão de Fechar 'X' (para TODAS as modais) */
+.modal-close-btn, .close-button {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+}
+.modal-close-btn:hover, .modal-close-btn:focus,
+.close-button:hover, .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* --- ESTILOS ESPECÍFICOS DA MODAL DE ANEXO --- */
+#anexo-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.anexo-image-preview {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+.anexo-image-preview img {
+    /* Esta é a regra mais importante */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.file-icon {
+    font-size: 5em;
+    color: #c0392b;
+    padding: 40px 0;
+}
+.file-name {
+    font-family: monospace;
+    background-color: #ecf0f1;
+    padding: 5px 10px;
+    border-radius: 4px;
+    word-break: break-all;
+    display: inline-block;
+    margin-top: 10px;
+}
+.anexo-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* --- ESTILOS PARA FORMULÁRIO DE PERMISSÕES --- */
+.permissions-form { display: block; max-width: 800px; }
+.permission-group { margin-bottom: 2rem; background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border: 1px solid #e9ecef; }
+.permission-group h3 { margin-top: 0; }
+.permission-group label { display: block; margin-bottom: 0.75rem; font-size: 1.1em; }
+.permission-group input[type="checkbox"] { margin-right: 10px; transform: scale(1.2); }
+
+/* --- ESTILOS PARA MENU SUSPENSO --- */
+.nav-dropdown { position: relative; }
+.dropdown-menu { display: none; position: absolute; background-color: #34495e; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); z-index: 1; border-radius: 0 0 5px 5px; }
+.dropdown-menu a { padding: 12px 16px; display: block; }
+.nav-dropdown:hover .dropdown-menu { display: block; }
+.dropdown-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- ESTILOS PARA PAGINAÇÃO --- */
+.pagination-controls {
+    margin-bottom: 2rem;
+    padding-left: 5px; /* Pequeno ajuste de alinhamento */
+}
+.pagination-controls form {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.pagination-controls select {
+    padding: 5px;
+    font-size: 0.9em;
+}
+
+.pagination-nav {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+.pagination-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap; /* Permite que os links quebrem a linha em telas pequenas */
+    justify-content: center;
+}
+.pagination-nav li {
+}
+.pagination-nav a {
+    display: block;
+    padding: 8px 14px;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #3498db;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.pagination-nav li.active a {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+    font-weight: bold;
+}
+.pagination-nav a:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+.pagination-nav li.active a:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+/* --- ESTILOS PARA BADGES/TAGS --- */
+.admin-badge {
+    display: inline-block;
+    background-color: #f39c12; /* Laranja/Amarelo para o Super Admin */
+    color: white;
+    font-size: 0.75em;
+    padding: 3px 8px;
+    border-radius: 10px; /* Mais arredondado */
+    margin-left: 8px;
+    font-weight: 500;
+    vertical-align: middle;
+    line-height: 1; /* Garante alinhamento vertical */
+}
+
+/* Badge para perfis compartilhados */
+.shared-badge {
+    background-color: #3498db; /* Azul */
+}
+
+/* Botão de anexo */
+.anexo-btn {
+    background: none; border: none; cursor: pointer; font-size: 1.1em;
+    padding: 0; margin: 0 8px; color: #7f8c8d; /* Cinza */
+}
+.anexo-btn:hover { color: #2c3e50; }
+
+/* Destaque para anexo existente */
+.anexo-btn.has-comprovante {
+    color: #3498db; /* Azul se já tiver anexo */
+}
+
+/*
+==============================================
+REGRAS RESPONSIVAS
+==============================================
+*/
+
+/* --- TELAS GRANDES PARA MÉDIAS (ex: laptops pequenos) --- */
+@media (max-width: 1200px) {
+    .dashboard-cards-4-cols {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .add-form {
+        grid-template-columns: 1fr;
+    }
+    .add-form button {
+        grid-column: auto;
+    }
+}
+
+/* --- TELAS MÉDIAS PARA PEQUENAS (ex: tablets) --- */
+@media (max-width: 992px) {
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .saldo-total-display {
+        margin-left: 0;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        padding: 0;
+        text-align: left;
+    }
+}
+
+/* --- TELAS PEQUENAS (ex: celulares) --- */
+@media (max-width: 768px) {
+    /* Cabeçalho e Menu */
+    .header-content {
+        position: relative;
+    }
+    .menu-toggle {
+        display: block;
+    }
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        right: 0;
+        background-color: #34495e;
+        flex-direction: column;
+        width: 100%;
+        padding: 10px 0;
+    }
+    .main-nav.is-open {
+        display: flex;
+    }
+    .main-nav a {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        border-radius: 0;
+    }
+    header h1 { font-size: 1.1em; }
+    .header-logo { height: 30px; }
+    
+    /* Layout Geral */
+    main {
+        padding: 1rem;
+        margin: 1rem;
+    }
+    
+    /* Formulários */
+    .filter-form {
+        grid-template-columns: 1fr;
+    }
+    form:not(.filter-form):not(.card-filter-form):not(.add-form) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .dropdown-menu.is-open {
+    display: block;
+}
+}
+
+/* --- DASHBOARD  */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 1.5rem;
+}
+.dashboard-header h2 {
+    margin: 0;
+}
+
+.dashboard-section {
+    margin-bottom: 2.5rem;
+}
+
+.dashboard-section h3 {
+    font-size: 1.4em;
+    color: #34495e;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.dashboard-cards { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px; 
+}
+
+.card { 
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    padding: 20px; 
+    border-radius: 8px; 
+    text-align: center; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.card h4 { 
+    margin-top: 0; 
+    margin-bottom: 15px;
+    color: #555; 
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.card p { 
+    font-size: 2em; 
+    font-weight: bold; 
+    margin: 0; 
+}
+
+/* --- BOTÃO E ESTILO ADICIONAL --- */
+.card .btn-detalhes, 
+a.btn-detalhes {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 15px;
+    background-color: #3498db;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+.card .btn-detalhes:hover,
+a.btn-detalhes:hover {
+    background-color: #2980b9;
+}
+
+.card-filter-form { 
+    margin-bottom: 15px; 
+}
+
+.card-filter-form select { 
+    width: 100%; 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    background-color: #fff; 
+    font-weight: 600; 
+    font-size: 1em;   
+    color: #555;
+}
+
+.card-vencido { background-color: #fbeee6; border: 1px solid #c0392b; }
+.card-vencido h4 { color: #c0392b; }
+.card-vencido .btn-detalhes { background-color: #c0392b; }
+.card-vencido .btn-detalhes:hover { background-color: #a93226; }
+
+/* --- RODAPÉ --- */
+footer { text-align: center; padding: 1rem; margin-top: 2rem; color: #777; }
+
+
+
+/* --- ESTILOS PARA ÍCONES DENTRO DOS CARDS --- */
+.card-icon {
+    font-size: 2.5em; /* Tamanho do ícone */
+    margin: 15px 0; /* Espaçamento vertical */
+    color: #bdc3c7; /* Cor cinza sutil */
+}
+
+/* Estilo específico para o ícone do balanço */
+.card-balanco .card-icon {
+    color: #3498db; /* Cor azul, para combinar com o tema */
+}
+
+/* --- ESTILOS PARA OS GRÁFICOS --- */
+.charts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.chart-box {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.chart-box h4 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Responsivo para os gráficos */
+@media (max-width: 992px) {
+    .charts-container {
+        grid-template-columns: 1fr; /* Uma coluna em telas menores */
+    }
+}
+
+/* --- ESTILOS PARA AS NOTIFICAÇÕES --- */
+.notification {
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.notification.is-success {
+    background-color: #27ae60; /* Verde */
+}
+
+.notification.is-error {
+    background-color: #c0392b; /* Vermelho */
+}
+
+.notification.is-warning {
+    background-color: #f39c12; /* Laranja */
+}
+
+/* --- ANIMAÇÃO PARA NOTIFICAÇÕES --- */
+.notification.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* --- Cor para o ícone 'Pagar' na Tabela --- */
+td.actions-cell button.open-modal-btn i.fa-circle-check {
+    color: #27ae60 !important;
+}
+
+/* Garante que o botão de ícone não tenha estilos indesejados */
+td.actions-cell button.open-modal-btn {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 8px !important;
+    font-size: 1.2em !important;
+    cursor: pointer !important;
+    vertical-align: middle;
+}
+
+/* --- Unifica o estilo dos botões DENTRO DA MODAL DE ANEXO --- */
+#anexoModal .anexo-actions a {
+    display: inline-flex; /* Usa flex para alinhar texto e ícone (se houver) */
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px !important;
+    border-radius: 4px !important;
+    text-decoration: none !important;
+    font-size: 0.9em !important;
+    font-weight: bold !important;
+    border: none !important;
+    color: white !important;
+    transition: background-color 0.2s;
+}
+
+/* Cor específica para o botão 'Baixar' e 'Imprimir' */
+#anexoModal .anexo-actions a.btn-detalhes {
+    background-color: #3498db !important;
+}
+#anexoModal .anexo-actions a.btn-detalhes:hover {
+    background-color: #2980b9 !important;
+}
+
+/*
+==============================================
+ESTILOS RESPONSIVOS (MOBILE)
+==============================================
+*/
+@media (max-width: 768px) {
+    .header-content {
+        position: relative;
+    }
+
+    .menu-toggle {
+        display: block; /* Mostra o botão hambúrguer */
+    }
+
+    .main-nav {
+        display: none; /* Esconde a navegação por padrão */
+        position: absolute;
+        top: 65px; /* Abaixo do cabeçalho */
+        left: 0;
+        right: 0;
+        background-color: #34495e; /* Cor de fundo para o menu aberto */
+        flex-direction: column; /* Empilha os links verticalmente */
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .main-nav.is-open {
+        display: flex; /* Mostra o menu quando o JS adiciona a classe */
+    }
+
+    .main-nav a {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        border-radius: 0;
+    }
+
+    main {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    header h1 { font-size: 1.1em; }
+    .header-logo { height: 30px; }
+    
+    .filter-form {
+        grid-template-columns: 1fr; /* Uma coluna para os filtros */
+    }
+
+    /* --- ESTILOS PARA O FORMULÁRIO DE "ADICIONAR NOVO" --- */
+.add-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto; /* Define as colunas */
+    gap: 15px;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 2rem;
+}
+
+/* Ocupa o espaço das últimas 2 colunas */
+.add-form button {
+    grid-column: span 2;
+}
+
+/* Garante que os inputs preencham o espaço */
+.add-form input,
+.add-form select,
+.add-form button {
+    width: 100%;
+    box-sizing: border-box; /* Garante que padding não estoure a largura */
+}
+
+/* RESPONSIVO PARA O FORMULÁRIO DE ADIÇÃO */
+@media (max-width: 1200px) {
+    .add-form {
+        grid-template-columns: 1fr; /* Uma coluna em telas menores */
+    }
+    .add-form button {
+        grid-column: auto; /* Reseta o span */
+    }
+}
+
+/* --- ESTILOS PARA A MODAL DE PAGAMENTO --- */
+.modal {
+    display: none; /* Escondido por padrão */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Converte o botão de ícone para ter aparência de link */
+.open-modal-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 8px;
+    /* Removemos a cor daqui para que o ícone determine a cor */
+}
+
+/* --- ESTILOS PARA PAGINAÇÃO --- */
+.pagination-controls {
+    margin-bottom: 1rem;
+}
+.pagination-controls select {
+    padding: 5px;
+}
+
+.pagination-nav {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+.pagination-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 5px;
+}
+.pagination-nav a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #3498db;
+    border-radius: 4px;
+}
+.pagination-nav li.active a {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+.pagination-nav a:hover {
+    background-color: #e9ecef;
+}
+.pagination-nav li.active a:hover {
+    background-color: #2980b9;
+}
+}
